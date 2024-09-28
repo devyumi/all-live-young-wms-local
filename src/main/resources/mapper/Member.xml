@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.all_live_young_wms_local.mapper.MemberMapper">
+
+    <resultMap id="memberResultMap" type="com.all_live_young_wms_local.domain.Member">
+        <id property="id" column="member_id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="email" column="email"/>
+        <result property="accountStatus" column="account_status"/>
+        <result property="joinDate" column="join_date"/>
+        <result property="lastLoginDate" column="last_login_date"/>
+        <result property="roleType" column="role_type"/>
+        <result property="businessNumber" column="businessNumber"/>
+        <result property="isAgree" column="is_agree"/>
+        <result property="agreeDate" column="agree_date"/>
+
+        <association property="address" javaType="com.all_live_young_wms_local.domain.Address">
+            <result property="roadNameAddress" column="road_name_address"/>
+            <result property="detailsAddress" column="details_address"/>
+        </association>
+
+        <association property="warehouse" javaType="com.all_live_young_wms_local.domain.Warehouse">
+            <id property="id" column="warehouse_id"/>
+            <result property="name" column="warehouse_name"/>
+            <result property="code" column="warehouse_code"/>
+
+            <association property="warehouseAddress" javaType="com.all_live_young_wms_local.domain.Address">
+                <result property="roadNameAddress" column="warehouse_road_address"/>
+                <result property="jibunAddress" column="warehouse_jibun_address"/>
+                <result property="zipCode" column="warehouse_zipcode"/>
+                <result property="detailsAddress" column="warehouse_details_address"/>
+            </association>
+        </association>
+    </resultMap>
+
+    <select id="findByEmail" resultMap="memberResultMap">
+        SELECT *
+        FROM member WHERE email = #{email}
+    </select>
+
+    <select id="findByName" resultMap="memberResultMap">
+        SELECT *
+        FROM member WHERE name = #{name}
+    </select>
+
+    <select id="findAllByRoleType" resultMap="memberResultMap">
+        SELECT *
+        FROM member WHERE role_type = #{roleType}
+    </select>
+</mapper>

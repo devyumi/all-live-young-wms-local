@@ -1,14 +1,19 @@
 package com.all_live_young_wms_local.web.controller;
 
+import com.all_live_young_wms_local.service.MemberService;
 import com.all_live_young_wms_local.service.SalesService;
 import com.all_live_young_wms_local.web.dto.SalesRequestDTO;
+import com.all_live_young_wms_local.web.dto.SalesSaveDTO;
+import com.all_live_young_wms_local.web.dto.UserDetailsDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SalesController {
 
     private final SalesService salesService;
+    private final MemberService memberService;
 
     @GetMapping
     public String getSales(SalesRequestDTO salesRequestDTO, Model model) {
@@ -28,5 +34,33 @@ public class SalesController {
     public String getSale(@PathVariable(value = "id") Long id, Model model) {
         model.addAttribute("sales", salesService.findSales(id));
         return "/finance/sales-details";
+    }
+
+    @GetMapping("/save")
+    public String getSalesSaveForm(Model model) {
+        model.addAttribute("salesSaveDTO", new SalesSaveDTO());
+        model.addAttribute("members", memberService.getCompanies());
+        return "/finance/sales-form";
+    }
+
+    @PostMapping("/save")
+    public String postSalesSaveForm(@AuthenticationPrincipal UserDetailsDTO user, Model model,
+                                    @ModelAttribute @Validated SalesSaveDTO salesSaveDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("members", memberService.getCompanies());
+            printErrorLog(bindingResult);
+            return "/finance/sales-form";
+        }
+        salesService.saveSale(salesSaveDTO, user.getMember().getWarehouse());
+        log.info("매출 등록 완료 | 등록자: {}", user.getMember().getName());
+        return "redirect:/sales";
+    }
+
+    private static void printErrorLog(BindingResult result) {
+        log.info("{}", "*".repeat(20));
+        for (FieldError fieldError : result.getFieldErrors()) {
+            log.error("{}: {}", fieldError.getField(), fieldError.getDefaultMessage());
+        }
+        log.info("{}", "*".repeat(20));
     }
 }
