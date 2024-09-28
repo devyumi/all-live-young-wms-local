@@ -19,8 +19,6 @@ public class ExpenseUpdateDTO {
 
     private Long id;
 
-    private LocalDate expenseDate;
-
     private String category;
 
     @NotNull(message = "지출액수는 필수 입력 값입니다.")
@@ -29,6 +27,4 @@ public class ExpenseUpdateDTO {
     private Integer amount;
 
     private String description;
-
-    private Warehouse warehouse;
 }

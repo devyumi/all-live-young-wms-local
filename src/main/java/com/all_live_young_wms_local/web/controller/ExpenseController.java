@@ -45,7 +45,6 @@ public class ExpenseController {
     public String postExpenseSaveForm(@AuthenticationPrincipal UserDetailsDTO user, Model model,
                                       @ModelAttribute @Validated ExpenseSaveDTO expenseSaveDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("expenseSaveDTO", expenseSaveDTO);
             printErrorLog(bindingResult);
             return "/finance/expense-form";
         }
@@ -54,17 +53,10 @@ public class ExpenseController {
         return "redirect:/expenses";
     }
 
-    private static void printErrorLog(BindingResult result) {
-        log.info("{}", "*".repeat(20));
-        for (FieldError fieldError : result.getFieldErrors()) {
-            log.error("{}: {}", fieldError.getField(), fieldError.getDefaultMessage());
-        }
-        log.info("{}", "*".repeat(20));
-    }
-
     @GetMapping("/{id}/update")
     public String getExpenseUpdateForm(@PathVariable(value = "id") Long id, Model model) {
         model.addAttribute("expenseUpdateDTO", expenseService.findExpense(id));
+        model.addAttribute("existExpense", expenseService.findExpense(id));
         return "/finance/expense-update";
     }
 
@@ -72,7 +64,8 @@ public class ExpenseController {
     public String postExpenseUpdateForm(@PathVariable(value = "id") Long id, Model model,
                                         @ModelAttribute @Validated ExpenseUpdateDTO expenseUpdateDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("expenseUpdateDTO", expenseService.findExpense(id));
+            model.addAttribute("expenseUpdateDTO", expenseUpdateDTO);
+            model.addAttribute("existExpense", expenseService.findExpense(id));
             printErrorLog(bindingResult);
             return "/finance/expense-update";
         }
@@ -86,5 +79,13 @@ public class ExpenseController {
         expenseService.deleteExpense(id);
         log.info("{}번 지출 내역 삭제 완료", id);
         return "redirect:/expenses";
+    }
+
+    private static void printErrorLog(BindingResult result) {
+        log.info("{}", "*".repeat(20));
+        for (FieldError fieldError : result.getFieldErrors()) {
+            log.error("{}: {}", fieldError.getField(), fieldError.getDefaultMessage());
+        }
+        log.info("{}", "*".repeat(20));
     }
 }

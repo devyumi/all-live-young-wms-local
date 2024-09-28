@@ -57,14 +57,6 @@ public class SalesController {
         return "redirect:/sales";
     }
 
-    private static void printErrorLog(BindingResult result) {
-        log.info("{}", "*".repeat(20));
-        for (FieldError fieldError : result.getFieldErrors()) {
-            log.error("{}: {}", fieldError.getField(), fieldError.getDefaultMessage());
-        }
-        log.info("{}", "*".repeat(20));
-    }
-
     @GetMapping("/{id}/update")
     public String getSalesUpdateForm(@PathVariable(value = "id") Long id, Model model) {
         model.addAttribute("salesUpdateDTO", salesService.findSales(id));
@@ -91,5 +83,13 @@ public class SalesController {
         salesService.deleteSale(id);
         log.info("{}번 매출 내역 삭제 완료", id);
         return "redirect:/sales";
+    }
+
+    private static void printErrorLog(BindingResult result) {
+        log.info("{}", "*".repeat(20));
+        for (FieldError fieldError : result.getFieldErrors()) {
+            log.error("{}: {}", fieldError.getField(), fieldError.getDefaultMessage());
+        }
+        log.info("{}", "*".repeat(20));
     }
 }
