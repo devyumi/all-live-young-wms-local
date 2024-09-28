@@ -81,4 +81,10 @@ public class ExpenseController {
         return "redirect:/expenses";
     }
 
+    @PostMapping("/{id}/delete")
+    public String postExpenseDelete(@PathVariable(value = "id") Long id) {
+        expenseService.deleteExpense(id);
+        log.info("{}번 지출 내역 삭제 완료", id);
+        return "redirect:/expenses";
+    }
 }
