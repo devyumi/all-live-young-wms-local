@@ -4,6 +4,7 @@ import com.all_live_young_wms_local.service.MemberService;
 import com.all_live_young_wms_local.service.SalesService;
 import com.all_live_young_wms_local.web.dto.SalesRequestDTO;
 import com.all_live_young_wms_local.web.dto.SalesSaveDTO;
+import com.all_live_young_wms_local.web.dto.SalesUpdateDTO;
 import com.all_live_young_wms_local.web.dto.UserDetailsDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,5 +63,26 @@ public class SalesController {
             log.error("{}: {}", fieldError.getField(), fieldError.getDefaultMessage());
         }
         log.info("{}", "*".repeat(20));
+    }
+
+    @GetMapping("/{id}/update")
+    public String getSalesUpdateForm(@PathVariable(value = "id") Long id, Model model) {
+        model.addAttribute("salesUpdateDTO", salesService.findSales(id));
+        model.addAttribute("existSales", salesService.findSales(id));
+        return "/finance/sales-update";
+    }
+
+    @PostMapping("/{id}/update")
+    public String postSalesUpdateForm(@PathVariable(value = "id") Long id, Model model,
+                                      @ModelAttribute @Validated SalesUpdateDTO salesUpdateDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("salesUpdateDTO", salesUpdateDTO);
+            model.addAttribute("existSales", salesService.findSales(id));
+            printErrorLog(bindingResult);
+            return "/finance/sales-update";
+        }
+        salesService.updateSale(salesUpdateDTO);
+        log.info("{}번 매출 내역 수정 완료", id);
+        return "redirect:/sales";
     }
 }
