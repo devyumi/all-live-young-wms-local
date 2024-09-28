@@ -3,6 +3,7 @@ package com.all_live_young_wms_local.web.controller;
 import com.all_live_young_wms_local.service.ExpenseService;
 import com.all_live_young_wms_local.web.dto.ExpenseRequestDTO;
 import com.all_live_young_wms_local.web.dto.ExpenseSaveDTO;
+import com.all_live_young_wms_local.web.dto.ExpenseUpdateDTO;
 import com.all_live_young_wms_local.web.dto.UserDetailsDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,4 +61,24 @@ public class ExpenseController {
         }
         log.info("{}", "*".repeat(20));
     }
+
+    @GetMapping("/{id}/update")
+    public String getExpenseUpdateForm(@PathVariable(value = "id") Long id, Model model) {
+        model.addAttribute("expenseUpdateDTO", expenseService.findExpense(id));
+        return "/finance/expense-update";
+    }
+
+    @PostMapping("/{id}/update")
+    public String postExpenseUpdateForm(@PathVariable(value = "id") Long id, Model model,
+                                        @ModelAttribute @Validated ExpenseUpdateDTO expenseUpdateDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("expenseUpdateDTO", expenseService.findExpense(id));
+            printErrorLog(bindingResult);
+            return "/finance/expense-update";
+        }
+        expenseService.updateExpense(expenseUpdateDTO);
+        log.info("{}번 지출 내역 수정 완료", id);
+        return "redirect:/expenses";
+    }
+
 }
