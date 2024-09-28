@@ -7,8 +7,7 @@ import org.springframework.format.annotation.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Getter
-@ToString
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

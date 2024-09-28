@@ -4,8 +4,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter
-@ToString
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -16,8 +15,11 @@ public class Member {
     private String phoneNumber;
     private String email;
     private Address address;
-    private AccountStatus accountStatus;
+    private String accountStatus;
     private LocalDateTime joinDate;
     private LocalDateTime lastLoginDate;
-    private RoleType roleType;
+    private String roleType;
+    private Warehouse warehouse;
+    private boolean isAgree;
+    private LocalDateTime agreeDate;
 }

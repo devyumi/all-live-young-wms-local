@@ -1,22 +1,31 @@
 package com.all_live_young_wms_local.domain;
 
-import lombok.*;
+import jakarta.annotation.Nullable;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Getter
-@ToString
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Sales {
     private Long id;
+
     private Warehouse warehouse;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate salesDate;
+
     private String category;
+
+    @Nullable
     private Member member;
 
     @NumberFormat(pattern = "#,###원")
