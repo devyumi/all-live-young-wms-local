@@ -35,7 +35,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
             <div class="sidebar-brand-icon">
                 <img src="../img/logo.png" width="80px">
             </div>
@@ -46,7 +46,7 @@
 
         <!-- 대시보드 -->
         <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" th:href="@{/}">
                 <i class="fas fa-fw fa-laugh-wink"></i>
                 <span>대시보드</span></a>
         </li>
@@ -69,8 +69,7 @@
             <div id="inboundBar" class="collapse" aria-labelledby="headingInboundBar" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">입고관리</h6>
-                    <a class="collapse-item" href="buttons.html">입고요청</a>
-                    <a class="collapse-item" href="cards.html">검수조서</a>
+                    <a class="collapse-item" th:href="@{/inbound-requests}">입고요청</a>
                 </div>
             </div>
         </li>
@@ -85,9 +84,7 @@
             <div id="outboundBar" class="collapse" aria-labelledby="headingOutboundBar" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">출고관리</h6>
-                    <a class="collapse-item" href="buttons.html">출고요청</a>
-                    <a class="collapse-item" href="cards.html">검수조서</a>
-                    <a class="collapse-item" href="cards.html">운송장</a>
+                    <a class="collapse-item" th:href="@{outbound-requests}">출고요청</a>
                 </div>
             </div>
         </li>
@@ -107,11 +104,10 @@
                 <i class="fas fa-fw fa-search"></i>
                 <span>창고관리</span>
             </a>
-            <div id="warehouseBar" class="collapse" aria-labelledby="headingWarehouseBar"
-                 data-parent="#accordionSidebar">
+            <div id="warehouseBar" class="collapse" aria-labelledby="headingWarehouseBar" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">창고관리</h6>
-                    <a class="collapse-item" href="buttons.html">창고목록</a>
+                    <a class="collapse-item" th:href="@{/warehouses}">창고목록</a>
                 </div>
             </div>
         </li>
@@ -126,8 +122,8 @@
             <div id="stockBar" class="collapse" aria-labelledby="headingStockBar" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">재고관리</h6>
-                    <a class="collapse-item" href="buttons.html">재고 목록</a>
-                    <a class="collapse-item" href="cards.html">재고 실사</a>
+                    <a class="collapse-item" th:href="@{/stocks}">재고 목록</a>
+                    <a class="collapse-item" th:href="@{/stocks/count}">재고 실사</a>
                 </div>
             </div>
         </li>
@@ -142,8 +138,8 @@
             <div id="financeBar" class="collapse" aria-labelledby="headingFinanceBar" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">재무관리</h6>
-                    <a class="collapse-item" href="buttons.html">지출 목록</a>
-                    <a class="collapse-item" href="cards.html">매출 목록</a>
+                    <a class="collapse-item" th:href="@{/expenses}">지출 목록</a>
+                    <a class="collapse-item" th:href="@{/sales}">매출 목록</a>
                 </div>
             </div>
         </li>
@@ -166,7 +162,7 @@
             <div id="memberBar" class="collapse" aria-labelledby="headingMemberBar" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">회원관리</h6>
-                    <a class="collapse-item" href="buttons.html">회원 목록</a>
+                    <a class="collapse-item" th:href="@{/members}">회원 목록</a>
                 </div>
             </div>
         </li>
@@ -181,8 +177,8 @@
             <div id="customerBar" class="collapse" aria-labelledby="headingcustomerBar" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">고객센터</h6>
-                    <a class="collapse-item" href="buttons.html">공지사항</a>
-                    <a class="collapse-item" href="cards.html">1:1문의 목록</a>
+                    <a class="collapse-item" th:href="@{/announcements}">공지사항</a>
+                    <a class="collapse-item" th:href="@{/inquiries}">1:1문의 목록</a>
                 </div>
             </div>
         </li>
@@ -199,7 +195,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#chartBar"
                aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-chart-area"></i>
+                <i class="fas fa-sign-out-alt fa-chart-area"></i>
                 <span>통계</span>
             </a>
             <div id="chartBar" class="collapse" aria-labelledby="headingChartBar" data-parent="#accordionSidebar">
@@ -207,7 +203,7 @@
                     <h6 class="collapse-header">통계</h6>
                     <a class="collapse-item" href="buttons.html">입·출고 통계</a>
                     <a class="collapse-item" href="cards.html">재고 통계</a>
-                    <a class="collapse-item" href="cards.html">재무 통계</a>
+                    <a class="collapse-item" th:href="@{/expenses/statistic}">재무 통계</a>
                 </div>
             </div>
         </li>
@@ -449,7 +445,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">로그아웃</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">로그아웃</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -457,7 +453,9 @@
                 <div class="modal-body">로그아웃 하시겠습니까?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <a class="btn btn-primary" href="login.html">로그아웃</a>
+                    <form method="post" th:action="@{/logout}" style="display: inline">
+                        <button class="btn btn-primary" type="submit">로그아웃</button>
+                    </form>
                 </div>
             </div>
         </div>
