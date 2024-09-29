@@ -21,16 +21,23 @@ public class SecurityConfig {
     private final LoginSuccess loginSuccess;
     private final LoginFail loginFail;
     private final LogoutSuccess logoutSuccess;
-    private final String[] all = {"/", "/find-account", "/reset-password","/members/**", "/inbound-requests/**", "/outbound-requests/**", "/stocks/**", "/warehouses/**", "/expenses", "/sales/**", "/announcements/**", "/inquirys/**"};
-    //총 관리자, 매니저, 회사
+    private final String[] admin = {"/members/requests/**", "/members/cancel/**", "sales"};
+    private final String[] manager = {"/inbound-requests/*/update-status", "/expenses/save", "/expenses/*/update", "/sales/save", "/sales/*/update"};
+    private final String[] adminAndManager = {"/members", "/announcements/save", "/announcements/*/**", "/inquiries/*/**", "/answers"};
+    private final String[] company = {"/inbound-requests/save", "/inbound-requests/*/update", "/inbound-requests/*/delete", "/outbound-requests/save", "/inquiries/save", "/inquiries/*/update"};
+    private final String[] all = {"/", "/inbound-requests", "/outbound-requests", "/members/*/**", "/announcements", "/inquiries", "/inquiries/*", "/expenses"};
+    private final String[] permitAll = {"/join", "/find-account", "/reset-password", "/join-type"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(requestMatcher -> requestMatcher
-                        .requestMatchers("/expenses/save", "/expenses/*/update").hasRole("MANAGER")
+                        .requestMatchers(adminAndManager).hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers(admin).hasRole("ADMIN")
+                        .requestMatchers(manager).hasRole("MANAGER")
+                        .requestMatchers(company).hasRole("COMPANY")
                         .requestMatchers(all).authenticated()
-                        .requestMatchers("/join").permitAll()
+                        .requestMatchers(permitAll).permitAll()
                         .anyRequest().authenticated())
 
                 .formLogin(login -> login
