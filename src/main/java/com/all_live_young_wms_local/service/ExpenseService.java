@@ -3,15 +3,13 @@ package com.all_live_young_wms_local.service;
 import com.all_live_young_wms_local.domain.Expense;
 import com.all_live_young_wms_local.domain.Warehouse;
 import com.all_live_young_wms_local.mapper.ExpenseMapper;
-import com.all_live_young_wms_local.web.dto.ExpenseRequestDTO;
-import com.all_live_young_wms_local.web.dto.ExpenseResponseDTO;
-import com.all_live_young_wms_local.web.dto.ExpenseSaveDTO;
-import com.all_live_young_wms_local.web.dto.ExpenseUpdateDTO;
+import com.all_live_young_wms_local.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -90,5 +88,20 @@ public class ExpenseService {
     @Transactional
     public void deleteExpense(Long id) {
         expenseMapper.delete(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<SumExpensesDTO> findSumExpenses(Integer year) {
+        return expenseMapper.findSumExpenses(year);
+    }
+
+    @Transactional(readOnly = true)
+    public List<SumExpensesCategoryDTO> findSumExpensesCategory(Integer year) {
+        return expenseMapper.findSumExpensesCategory(year);
+    }
+
+    @Transactional(readOnly = true)
+    public List<NetProfitDTO> findNetProfit() {
+        return expenseMapper.findNetProfit();
     }
 }

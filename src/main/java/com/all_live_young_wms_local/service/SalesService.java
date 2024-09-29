@@ -4,15 +4,13 @@ import com.all_live_young_wms_local.domain.Sales;
 import com.all_live_young_wms_local.domain.Warehouse;
 import com.all_live_young_wms_local.mapper.MemberMapper;
 import com.all_live_young_wms_local.mapper.SalesMapper;
-import com.all_live_young_wms_local.web.dto.SalesRequestDTO;
-import com.all_live_young_wms_local.web.dto.SalesResponseDTO;
-import com.all_live_young_wms_local.web.dto.SalesSaveDTO;
-import com.all_live_young_wms_local.web.dto.SalesUpdateDTO;
+import com.all_live_young_wms_local.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -107,5 +105,10 @@ public class SalesService {
     @Transactional
     public void deleteSale(Long id) {
         salesMapper.delete(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<SumSalesDTO> findSumSales(Integer year) {
+        return salesMapper.findSumSales(year);
     }
 }

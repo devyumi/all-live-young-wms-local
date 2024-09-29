@@ -1,6 +1,7 @@
 package com.all_live_young_wms_local.web.controller;
 
 import com.all_live_young_wms_local.service.ExpenseService;
+import com.all_live_young_wms_local.service.SalesService;
 import com.all_live_young_wms_local.web.dto.ExpenseRequestDTO;
 import com.all_live_young_wms_local.web.dto.ExpenseSaveDTO;
 import com.all_live_young_wms_local.web.dto.ExpenseUpdateDTO;
@@ -15,6 +16,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/expenses")
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 public class ExpenseController {
 
     private final ExpenseService expenseService;
+    private final SalesService salesService;
 
     @GetMapping
     public String getExpenses(ExpenseRequestDTO expenseRequestDTO, Model model) {
@@ -79,6 +83,15 @@ public class ExpenseController {
         expenseService.deleteExpense(id);
         log.info("{}번 지출 내역 삭제 완료", id);
         return "redirect:/expenses";
+    }
+
+    @GetMapping("/statistic")
+    public String getExpenseStatistic(Model model) {
+        model.addAttribute("sumExpense", expenseService.findSumExpenses(LocalDate.now().getYear()));
+        model.addAttribute("sumExpenseCategory", expenseService.findSumExpensesCategory(LocalDate.now().getYear()));
+        model.addAttribute("sumSales", salesService.findSumSales(LocalDate.now().getYear()));
+        model.addAttribute("netProfit", expenseService.findNetProfit());
+        return "/finance/expense-chart";
     }
 
     private static void printErrorLog(BindingResult result) {
