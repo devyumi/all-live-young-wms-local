@@ -15,10 +15,10 @@ public class Member {
     private String phoneNumber;
     private String email;
     private Address address;
-    private String accountStatus;
+    private AccountStatus accountStatus;
     private LocalDateTime joinDate;
     private LocalDateTime lastLoginDate;
-    private String roleType;
+    private RoleType roleType;
     private Warehouse warehouse;
     private boolean isAgree;
     private LocalDateTime agreeDate;

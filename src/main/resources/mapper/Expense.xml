@@ -26,6 +26,12 @@
         </association>
     </resultMap>
 
+    <resultMap id="statistic" type="com.all_live_young_wms_local.web.dto.ExpenseStatisticDTO">
+        <result property="year" column="YEAR(expense_date)"/>
+        <result property="month" column="MONTH(expense_date)"/>
+        <result property="sumAmount" column="SUM(expense_amount)"/>
+    </resultMap>
+
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO expense (warehouse_id, expense_date, expense_category, expense_amount, expense_description, reg_date)
         VALUES (#{expense.warehouse.id}, #{expense.expenseDate}, #{expense.category}, #{expense.amount}, #{expense.description}, #{expense.regDate})
@@ -94,4 +100,13 @@
             ]]>
         </if>
     </select>
+
+    <select id="expenseStatistic" resultMap="statistic">
+        SELECT YEAR(expense_date), MONTH(expense_date), SUM(expense_amount)
+        FROM expense
+        WHERE YEAR(expense_date) = #{year}
+        GROUP BY DATE_FORMAT(expense_date, '%Y-%m')
+        ORDER BY YEAR(expense_date), MONTH(expense_date);
+    </select>
+
 </mapper>

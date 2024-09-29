@@ -10,10 +10,10 @@
         <result property="password" column="password"/>
         <result property="phoneNumber" column="phone_number"/>
         <result property="email" column="email"/>
-        <result property="accountStatus" column="account_status"/>
+        <result property="accountStatus" column="account_status" javaType="com.all_live_young_wms_local.domain.AccountStatus"/>
         <result property="joinDate" column="join_date"/>
         <result property="lastLoginDate" column="last_login_date"/>
-        <result property="roleType" column="role_type"/>
+        <result property="roleType" column="role_type" javaType="com.all_live_young_wms_local.domain.RoleType"/>
         <result property="businessNumber" column="businessNumber"/>
         <result property="isAgree" column="is_agree"/>
         <result property="agreeDate" column="agree_date"/>
