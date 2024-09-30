@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html th:replace="~{fragment/layout.html :: layout(~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{fragment/layout.html :: layout(~{::section})}" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <section>
     <head>
         <title>All Live Young: Dashboard</title>
@@ -141,7 +142,8 @@
                 <!-- Card Header -->
                 <div
                         class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">재고 통계 (상위 5개)</h6>
+                    <h6 class="m-0 font-weight-bold text-primary" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">재고 통계 (상위 5개)</h6>
+                    <h6 class="m-0 font-weight-bold text-primary" sec:authorize="hasRole('ROLE_COMPANY')">재고 통계 (부족 재고 상위 5개)</h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
