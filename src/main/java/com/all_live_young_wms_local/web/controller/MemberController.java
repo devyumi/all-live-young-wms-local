@@ -15,6 +15,6 @@ public class MemberController {
     public String login(@RequestParam(value = "error", required = false) String error, Model model) {
         model.addAttribute("loginDTO", new LoginDTO());
         model.addAttribute("error", error);
-        return "/login";
+        return "/member/login";
     }
 }
