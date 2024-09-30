@@ -19,6 +19,7 @@ public class Member {
     private LocalDateTime joinDate;
     private LocalDateTime lastLoginDate;
     private RoleType roleType;
+    private String businessNumber;
     private Warehouse warehouse;
     private boolean isAgree;
     private LocalDateTime agreeDate;

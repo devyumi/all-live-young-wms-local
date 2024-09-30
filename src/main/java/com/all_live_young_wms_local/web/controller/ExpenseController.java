@@ -1,5 +1,6 @@
 package com.all_live_young_wms_local.web.controller;
 
+import com.all_live_young_wms_local.domain.Warehouse;
 import com.all_live_young_wms_local.service.ExpenseService;
 import com.all_live_young_wms_local.service.SalesService;
 import com.all_live_young_wms_local.web.dto.ExpenseRequestDTO;
@@ -28,8 +29,15 @@ public class ExpenseController {
     private final SalesService salesService;
 
     @GetMapping
-    public String getExpenses(ExpenseRequestDTO expenseRequestDTO, Model model) {
-        model.addAttribute("expenseList", expenseService.findExpenses(expenseRequestDTO));
+    public String getExpenses(@AuthenticationPrincipal UserDetailsDTO user,
+                              ExpenseRequestDTO expenseRequestDTO, Model model) {
+        Warehouse warehouse = user.getMember().getWarehouse();
+
+        if (warehouse == null) {
+            model.addAttribute("expenseList", expenseService.findExpenses(expenseRequestDTO, 0L));
+        } else {
+            model.addAttribute("expenseList", expenseService.findExpenses(expenseRequestDTO, user.getMember().getWarehouse().getId()));
+        }
         return "/finance/expense-list";
     }
 
