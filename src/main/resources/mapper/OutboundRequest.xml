@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.all_live_young_wms_local.mapper.OutboundRequestMapper">
+    <resultMap id="countOutbound" type="com.all_live_young_wms_local.web.dto.CountRequestDTO">
+        <result property="year" column="YEAR(reg_date)"/>
+        <result property="month" column="MONTH(reg_date)"/>
+        <result property="count" column="COUNT(outbound_request_id)"/>
+    </resultMap>
+
+    <select id="countByStatus" resultType="int">
+        SELECT COUNT(outbound_request_id)
+        FROM outbound_request
+        WHERE outbound_request_status = #{status}
+    </select>
+
+    <select id="findCountOutbound" resultMap="countOutbound">
+        SELECT YEAR(reg_date), MONTH(reg_date), COUNT(outbound_request_id)
+        FROM outbound_request
+        WHERE YEAR(reg_date) = #{year}
+        GROUP BY DATE_FORMAT(reg_date, '%Y-%m')
+        ORDER BY YEAR(reg_date), MONTH(reg_date)
+    </select>
+
+</mapper>
