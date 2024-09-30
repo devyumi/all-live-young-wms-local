@@ -96,24 +96,34 @@
         JOIN warehouse w ON s.warehouse_id = w.warehouse_id
         LEFT JOIN member m ON s.member_id = m.member_id
 
-        <if test="requestDTO.keyword != ''">
-            <if test="requestDTO.type == 'category'">
-                WHERE sales_category LIKE CONCAT ('%', #{requestDTO.keyword} '%')
+        <where>
+            <if test="member.businessNumber != null and member.warehouse == null">
+                s.member_id = #{member.id}
+                AND sales_category LIKE CONCAT ('%', '계약비용', '%')
             </if>
-            <if test="requestDTO.type == 'warehouse'">
-                WHERE warehouse_name LIKE CONCAT ('%', #{requestDTO.keyword}, '%')
+            <if test="member.warehouse != null and member.businessNumber == null">
+                s.warehouse_id = #{member.warehouse.id}
             </if>
-            <if test="requestDTO.type == 'member'">
-                WHERE m.name = LIKE CONCAT ('%', #{requestDTO.keyword}, '%')
-            </if>
-        </if>
 
-        <if test="requestDTO.dateFrom != null and requestDTO.dateTo != null">
-            <![CDATA[
-                WHERE sales_date >= #{requestDTO.dateFrom}
-                 AND sales_date <= #{requestDTO.dateTo}
-            ]]>
-        </if>
+            <if test="requestDTO.keyword != ''">
+                <if test="requestDTO.type == 'category'">
+                    sales_category LIKE CONCAT ('%', #{requestDTO.keyword}, '%')
+                </if>
+                <if test="requestDTO.type == 'warehouse'">
+                    warehouse_name LIKE CONCAT ('%', #{requestDTO.keyword}, '%')
+                </if>
+                <if test="requestDTO.type == 'member'">
+                    m.name LIKE CONCAT ('%', #{requestDTO.keyword}, '%')
+                </if>
+            </if>
+
+            <if test="requestDTO.dateFrom != null and requestDTO.dateTo != null">
+                <![CDATA[
+                    sales_date >= #{requestDTO.dateFrom}
+                     AND sales_date <= #{requestDTO.dateTo}
+                ]]>
+            </if>
+        </where>
         ORDER BY sales_id DESC
         LIMIT #{requestDTO.offset}, #{requestDTO.size}
     </select>
@@ -124,24 +134,34 @@
         JOIN warehouse w ON s.warehouse_id = w.warehouse_id
         LEFT JOIN member m ON s.member_id = m.member_id
 
-        <if test="requestDTO.keyword != ''">
-            <if test="requestDTO.type == 'category'">
-                WHERE sales_category LIKE CONCAT ('%', #{requestDTO.keyword} '%')
+        <where>
+            <if test="member.businessNumber != null and member.warehouse == null">
+                s.member_id = #{member.id}
+                AND sales_category LIKE CONCAT ('%', '계약비용', '%')
             </if>
-            <if test="requestDTO.type == 'warehouse'">
-                WHERE warehouse_name LIKE CONCAT ('%', #{requestDTO.keyword}, '%')
+            <if test="member.warehouse != null and member.businessNumber == null">
+                s.warehouse_id = #{member.warehouse.id}
             </if>
-            <if test="requestDTO.type == 'member'">
-                WHERE m.name = LIKE CONCAT ('%', #{requestDTO.keyword}, '%')
-            </if>
-        </if>
 
-        <if test="requestDTO.dateFrom != null and requestDTO.dateTo != null">
-            <![CDATA[
-                WHERE sales_date >= #{requestDTO.dateFrom}
-                 AND sales_date <= #{requestDTO.dateTo}
-            ]]>
-        </if>
+            <if test="requestDTO.keyword != ''">
+                <if test="requestDTO.type == 'category'">
+                    sales_category LIKE CONCAT ('%', #{requestDTO.keyword}, '%')
+                </if>
+                <if test="requestDTO.type == 'warehouse'">
+                    warehouse_name LIKE CONCAT ('%', #{requestDTO.keyword}, '%')
+                </if>
+                <if test="requestDTO.type == 'member'">
+                    m.name LIKE CONCAT ('%', #{requestDTO.keyword}, '%')
+                </if>
+            </if>
+
+            <if test="requestDTO.dateFrom != null and requestDTO.dateTo != null">
+                <![CDATA[
+                    sales_date >= #{requestDTO.dateFrom}
+                     AND sales_date <= #{requestDTO.dateTo}
+                ]]>
+            </if>
+        </where>
     </select>
 
     <select id="findSumSales" resultMap="sumSales">

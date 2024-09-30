@@ -1,5 +1,6 @@
 package com.all_live_young_wms_local.service;
 
+import com.all_live_young_wms_local.domain.Member;
 import com.all_live_young_wms_local.domain.Sales;
 import com.all_live_young_wms_local.domain.Warehouse;
 import com.all_live_young_wms_local.mapper.MemberMapper;
@@ -26,11 +27,11 @@ public class SalesService {
      * @return
      */
     @Transactional(readOnly = true)
-    public SalesResponseDTO findSales(SalesRequestDTO salesRequestDTO) {
+    public SalesResponseDTO findSales(SalesRequestDTO salesRequestDTO, Member member) {
         return SalesResponseDTO.builder()
                 .salesRequestDTO(salesRequestDTO)
-                .sales(salesMapper.findAll(salesRequestDTO))
-                .total(salesMapper.count(salesRequestDTO))
+                .sales(salesMapper.findAll(salesRequestDTO, member))
+                .total(salesMapper.count(salesRequestDTO, member))
                 .build();
     }
 

@@ -1,5 +1,6 @@
 package com.all_live_young_wms_local.mapper;
 
+import com.all_live_young_wms_local.domain.Member;
 import com.all_live_young_wms_local.domain.Sales;
 import com.all_live_young_wms_local.web.dto.SalesRequestDTO;
 import com.all_live_young_wms_local.web.dto.SumSalesDTO;
@@ -11,7 +12,7 @@ import java.util.Optional;
 
 @Mapper
 public interface SalesMapper {
-    List<Sales> findAll(@Param("requestDTO") SalesRequestDTO requestDTO);
+    List<Sales> findAll(@Param("requestDTO") SalesRequestDTO requestDTO, @Param("member") Member member);
 
     Optional<Sales> findById(@Param("id") Long id);
 
@@ -21,7 +22,7 @@ public interface SalesMapper {
 
     void delete(@Param("id") Long id);
 
-    Integer count(@Param("requestDTO") SalesRequestDTO requestDTO);
+    Integer count(@Param("requestDTO") SalesRequestDTO requestDTO, @Param("member") Member member);
 
     List<SumSalesDTO> findSumSales(Integer year);
 }
