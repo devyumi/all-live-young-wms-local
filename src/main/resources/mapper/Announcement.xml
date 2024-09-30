@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.all_live_young_wms_local.mapper.AnnouncementMapper">
+    <resultMap id="findAnnouncement" type="com.all_live_young_wms_local.web.dto.AnnouncementDTO">
+        <id property="id" column="announcement_id"/>
+        <result property="date" column="write_date"/>
+        <result property="title" column="title"/>
+    </resultMap>
+
+    <select id="findAnnouncementByDate" resultMap="findAnnouncement">
+        SELECT announcement_id, write_date, title
+        FROM announcement
+        ORDER BY write_date DESC
+        LIMIT 5
+    </select>
+</mapper>
