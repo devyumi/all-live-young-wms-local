@@ -86,7 +86,7 @@
     <script src="../js/demo/chart-bar-demo.js" th:src="@{/js/demo/chart-bar-demo.js}"></script>
 
     <script th:inline="javascript">
-        //지출
+        //***************************************************************************지출
         const expenses = [[${sumExpense}]];
         const labels1 = expenses.map(exp => exp.month + '월');
         const data1 = expenses.map(exp => exp.sumAmount);
@@ -139,7 +139,6 @@
                         ticks: {
                             maxTicksLimit: 10,
                             padding: 10,
-                            // Include a dollar sign in the ticks
                             callback: function (value, index, values) {
                                 return number_format(value) + '원';
                             }
@@ -180,7 +179,7 @@
             }
         });
 
-        //지출 카테고리
+        //***************************************************************************지출 카테고리
         const categories = [[${sumExpenseCategory}]];
         const labels2 = categories.map(category1 => category1.category);
         const data2 = categories.map(category1 => category1.sumAmount);
@@ -223,7 +222,7 @@
             },
         });
 
-        //매출
+        //***************************************************************************매출
         const sales = [[${sumSales}]];
         const labels3 = sales.map(sale => sale.month + '월');
         const data3 = sales.map(sale => sale.sumAmount);
@@ -276,7 +275,6 @@
                         ticks: {
                             maxTicksLimit: 10,
                             padding: 10,
-                            // Include a dollar sign in the ticks
                             callback: function (value, index, values) {
                                 return number_format(value) + '원';
                             }
@@ -317,7 +315,7 @@
             }
         });
 
-        //순수익
+        //***************************************************************************순수익
         const netProfits = [[${netProfit}]];
         const labels4 = netProfits.map(netProfit1 => netProfit1.year + '년');
         const data4 = netProfits.map(netProfit1 => netProfit1.netProfit);
