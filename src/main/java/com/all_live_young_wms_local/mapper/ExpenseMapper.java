@@ -6,24 +6,23 @@ import com.all_live_young_wms_local.web.dto.NetProfitDTO;
 import com.all_live_young_wms_local.web.dto.SumExpensesCategoryDTO;
 import com.all_live_young_wms_local.web.dto.SumExpensesDTO;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Optional;
 
 @Mapper
 public interface ExpenseMapper {
-    List<Expense> findAll(@Param("requestDTO") ExpenseRequestDTO requestDTO, @Param("warehouse_id") Long warehouse_id);
+    List<Expense> findAll(ExpenseRequestDTO requestDTO, Long warehouse_id);
 
-    Optional<Expense> findById(@Param("id") Long id);
+    Optional<Expense> findById(Long id);
 
-    Long save(@Param("expense") Expense expense);
+    Long save(Expense expense);
 
-    void update(@Param("expense") Expense expense);
+    void update(Expense expense);
 
-    void delete(@Param("id") Long id);
+    void delete(Long id);
 
-    Integer count(@Param("requestDTO") ExpenseRequestDTO requestDTO, @Param("warehouse_id") Long warehouse_id);
+    Integer count(ExpenseRequestDTO requestDTO, Long warehouse_id);
 
     List<SumExpensesDTO> findSumExpenses(Integer year);
 
