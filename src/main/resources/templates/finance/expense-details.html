@@ -43,13 +43,34 @@
             </table>
             <div style="display: flex; align-items: center;">
                 <a th:href="@{/expenses/{id}/update(id=${expense.id})}" class="btn btn-primary" sec:authorize="hasRole('ROLE_MANAGER')" th:text="수정"></a>
-                <form method="post" th:action="@{/expenses/{id}/delete(id=${expense.id})}">
-                    <button type="submit" class="btn btn-danger" style="margin-left: 0.3rem" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" th:text="삭제"/>
-                </form>
+                <a class="btn btn-danger" style="margin-left: 0.3rem" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" th:text="삭제" data-toggle="modal" data-target="#deleteModal"></a>
                 <a th:href="@{/expenses}" class="btn btn-secondary" th:text="목록" style="margin-left: 0.3rem"></a>
             </div>
         </div>
     </div>
+
+    <!-- delete Modal-->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">게시물 삭제</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">해당 게시물을 정말로 삭제하시겠습니까?</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+                    <form method="post" th:action="@{/expenses/{id}/delete(id=${expense.id})}" style="display: inline">
+                        <button class="btn btn-warning" type="submit">삭제</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     </body>
 </section>
 </html>
