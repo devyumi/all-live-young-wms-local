@@ -5,6 +5,7 @@ import com.all_live_young_wms_local.domain.Sales;
 import com.all_live_young_wms_local.web.dto.SalesRequestDTO;
 import com.all_live_young_wms_local.web.dto.SumSalesDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,9 +16,9 @@ public interface SalesMapper {
 
     Optional<Sales> findById(Long id);
 
-    Long save(Sales sales);
+    Long save(@Param("sales") Sales sales);
 
-    void update(Sales sales);
+    void update(@Param("sales") Sales sales);
 
     void delete(Long id);
 

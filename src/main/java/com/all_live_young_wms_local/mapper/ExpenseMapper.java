@@ -6,6 +6,7 @@ import com.all_live_young_wms_local.web.dto.NetProfitDTO;
 import com.all_live_young_wms_local.web.dto.SumExpensesCategoryDTO;
 import com.all_live_young_wms_local.web.dto.SumExpensesDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,9 +17,9 @@ public interface ExpenseMapper {
 
     Optional<Expense> findById(Long id);
 
-    Long save(Expense expense);
+    Long save(@Param("expense") Expense expense);
 
-    void update(Expense expense);
+    void update(@Param("expense") Expense expense);
 
     void delete(Long id);
 
